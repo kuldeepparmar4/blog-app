@@ -1,7 +1,8 @@
 // ============================================
 // SERVER.JS — Blog App Backend
 // ============================================
-
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -38,6 +39,9 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(helmet());
+app.use(mongoSanitize());
 
 // ============================================
 // Test Route
