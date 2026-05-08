@@ -252,14 +252,15 @@ router.delete("/:id", protect, async (req, res, next) => {
         .json({ success: false, message: "Post not found" });
     }
 
-    // Only the author can delete their post
+    // author and admin can delete their post
     if (
       post.author.toString() !== req.user.userId &&
       req.user.role !== "admin"
     ) {
+      if (req.file) await cloudinary.uploader.destroy(req.file.filename);
       return res.status(403).json({
         success: false,
-        message: "Forbidden: You can only delete your own posts",
+        message: "Forbidden: You can only edit your own posts",
       });
     }
 

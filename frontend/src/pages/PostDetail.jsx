@@ -60,7 +60,10 @@ export default function PostDetail() {
       day: "numeric",
     });
 
-  const isAuthor = isLoggedIn && post && user?.id === post.author?._id;
+  const canModify =
+    isLoggedIn &&
+    post &&
+    (user?.id === post.author?._id || user?.role === "admin");
 
   if (loading)
     return (
@@ -143,7 +146,7 @@ export default function PostDetail() {
                   )}
               </div>
 
-              {isAuthor && (
+              {canModify && (
                 <div className="postdetail-actions">
                   <Link to={`/edit/${post._id}`} className="btn btn-outline">
                     ✏️ Edit Post

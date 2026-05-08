@@ -25,8 +25,11 @@ export default function EditPost() {
         const res = await api.get(`/posts/${id}`);
         const post = res.data.post;
 
-        // Check if logged-in user is the author
-        if (user?.id !== post.author?._id) {
+        // Allow author OR admin
+        const canEdit =
+          user && (user.id === post.author?._id || user.role === "admin");
+
+        if (!canEdit) {
           toast.error("You can only edit your own posts.");
           navigate("/");
           return;
