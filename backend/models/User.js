@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema(
       default: "",
       maxlength: [200, "Bio cannot exceed 200 characters"],
     },
+
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
   {
     timestamps: true, // automatically adds createdAt and updatedAt fields

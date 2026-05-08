@@ -33,7 +33,10 @@ const protect = (req, res, next) => {
 
     // Attach the decoded user data to the request object
     // Now any route handler can access req.user.userId
-    req.user = decoded;
+    req.user = {
+      userId: decoded.userId,
+      role: decoded.role || "user",
+    };
 
     // next() means "I'm done, pass control to the next function"
     // Without calling next(), the request would hang forever

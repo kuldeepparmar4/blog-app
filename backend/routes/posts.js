@@ -253,7 +253,10 @@ router.delete("/:id", protect, async (req, res, next) => {
     }
 
     // Only the author can delete their post
-    if (post.author.toString() !== req.user.userId) {
+    if (
+      post.author.toString() !== req.user.userId &&
+      req.user.role !== "admin"
+    ) {
       return res.status(403).json({
         success: false,
         message: "Forbidden: You can only delete your own posts",

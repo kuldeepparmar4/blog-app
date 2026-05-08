@@ -16,11 +16,14 @@ const protect = require("../middleware/auth");
 // ──────────────────────────────────────────
 // Helper: Create JWT token
 // ──────────────────────────────────────────
-const createToken = (userId) => {
+const createToken = (user) => {
   return jwt.sign(
-    { userId }, // payload: data stored inside the token
-    process.env.JWT_SECRET, // secret key used to sign (like a password)
-    { expiresIn: "7d" }, // token is valid for 7 days
+    {
+      userId: user._id,
+      role: user.role,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" },
   );
 };
 
@@ -88,7 +91,7 @@ router.post(
       });
 
       // Create JWT token
-      const token = createToken(user._id);
+      const token = createToken(user);
 
       // Send response — DO NOT include password in response
       res.status(201).json({
@@ -101,6 +104,7 @@ router.post(
           email: user.email,
           avatar: user.avatar,
           bio: user.bio,
+          role: user.role,
           createdAt: user.createdAt,
         },
       });
@@ -152,7 +156,7 @@ router.post(
         });
       }
 
-      const token = createToken(user._id);
+      const token = createToken(user);
 
       res.json({
         success: true,
@@ -164,6 +168,7 @@ router.post(
           email: user.email,
           avatar: user.avatar,
           bio: user.bio,
+          role: user.role,
           createdAt: user.createdAt,
         },
       });
