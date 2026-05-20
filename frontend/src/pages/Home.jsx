@@ -46,9 +46,11 @@ export default function Home() {
     <div className="home-page">
       <div className="hero">
         <div className="container">
-          <h1>Welcome to BlogApp ✍️</h1>
+          <h1>Write. Share. Inspire.</h1>
+
           <p>
-            Discover stories, ideas, and expertise from writers on any topic.
+            A modern full-stack blogging platform where developers and creators
+            can publish ideas, share knowledge, and explore powerful stories.
           </p>
           <form onSubmit={handleSearch} className="search-form">
             <input
